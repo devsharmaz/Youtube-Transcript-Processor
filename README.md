@@ -1,4 +1,9 @@
-# Full-Stack Transcript Processor
+# YoutubeTranscript Processor
+
+<img width="1009" height="490" alt="image" src="https://github.com/user-attachments/assets/2ee1f164-6ce9-4d5a-9c86-50836752c87f" />
+<img width="1003" height="829" alt="image" src="https://github.com/user-attachments/assets/31be7c73-711f-44d4-b44e-e1ed1d5032b4" />
+
+
 
 This project is a full-stack application that transcribes audio from YouTube videos and processes the transcript to extract key topics and insights. The backend is a Python FastAPI application, and the frontend is a modern JavaScript/TypeScript application built with React and Vite.
 
