@@ -1,0 +1,9 @@
+python-dotenv
+yt-dlp
+dotenv
+requests
+ipykernel
+google-generativeai
+fastapi
+uvicorn
+pydantic
