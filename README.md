@@ -5,7 +5,7 @@
 
 
 
-This project is a full-stack application that transcribes audio from YouTube videos and processes the transcript to extract key topics and insights. The backend is a Python FastAPI application, and the frontend is a modern JavaScript/TypeScript application built with React and Vite.
+This project is a application that transcribes audio from YouTube videos and processes the transcript to extract key topics and insights. The backend is a Python FastAPI application, and the frontend is a modern JavaScript/TypeScript application built with React and Vite.
 
 ## Description
 
