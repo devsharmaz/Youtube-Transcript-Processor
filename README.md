@@ -19,11 +19,6 @@ The goal of this project is to provide a user-friendly interface for transformin
 - **Transcript Processing:** Uses Google Gemini to extract key topics and format the transcript.
 - **API Endpoint:** Exposes a FastAPI endpoint for the frontend to consume.
 
-### Frontend
-- **User Interface:** A simple and intuitive interface for inputting YouTube URLs.
-- **Transcript Display:** Displays the formatted transcript returned by the backend.
-- **Responsive Design:** The UI is responsive and works on different screen sizes.
-
 ## Technologies Used
 
 ### Backend
@@ -36,14 +31,6 @@ The goal of this project is to provide a user-friendly interface for transformin
 - python-dotenv
 - requests
 - pydantic
-
-### Frontend
-- TypeScript
-- React
-- Vite
-- Node.js
-- npm
-- Tailwind CSS
 
 ## Project Structure
 
