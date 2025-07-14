@@ -15,6 +15,12 @@ class TranscriptClass:
         }
 
     def download_audio_from_youtube(self, youtube_url, output_base="podcast"):
+        # remove previous m4a file to add new one.
+        file_path = "podcast.m4a"
+
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        
         yt_dlp_path = r"yt-dlp.exe"
         output_template = f"{output_base}.%(ext)s"
 
