@@ -56,10 +56,65 @@ function App() {
     if (!response?.content) return;
     
     try {
-      // Extract text content from HTML
+      // Extract text content from HTML while preserving formatting
       const parser = new DOMParser();
       const doc = parser.parseFromString(response.content, 'text/html');
-      const textContent = doc.body.textContent || doc.body.innerText || '';
+      
+      // Convert HTML to formatted text while preserving structure
+      let textContent = '';
+      
+      // Process each element to maintain proper spacing and line breaks
+      const processNode = (node: Node): string => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          return node.textContent || '';
+        }
+        
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const element = node as Element;
+          const tagName = element.tagName.toLowerCase();
+          
+          let content = '';
+          for (const child of Array.from(node.childNodes)) {
+            content += processNode(child);
+          }
+          
+          // Add appropriate line breaks and formatting based on HTML tags
+          switch (tagName) {
+            case 'h1':
+            case 'h2':
+            case 'h3':
+            case 'h4':
+            case 'h5':
+            case 'h6':
+              return `\n${content}\n`;
+            case 'p':
+              return `${content}\n\n`;
+            case 'br':
+              return '\n';
+            case 'hr':
+              return '\n---\n\n';
+            case 'li':
+              return `- ${content}\n`;
+            case 'ul':
+            case 'ol':
+              return `${content}\n`;
+            case 'div':
+              return `${content}\n`;
+            default:
+              return content;
+          }
+        }
+        
+        return '';
+      };
+      
+      textContent = processNode(doc.body);
+      
+      // Clean up excessive line breaks while preserving intentional spacing
+      textContent = textContent
+        .replace(/\n{3,}/g, '\n\n') // Replace 3+ consecutive newlines with 2
+        .replace(/^\n+/, '') // Remove leading newlines
+        .replace(/\n+$/, ''); // Remove trailing newlines
       
       await navigator.clipboard.writeText(textContent);
       setIsCopied(true);
@@ -72,9 +127,59 @@ function App() {
       console.error('Failed to copy content:', error);
       // Fallback for older browsers
       const textArea = document.createElement('textarea');
+      
+      // Use the same formatting logic for fallback
       const parser = new DOMParser();
       const doc = parser.parseFromString(response.content, 'text/html');
-      const textContent = doc.body.textContent || doc.body.innerText || '';
+      
+      const processNode = (node: Node): string => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          return node.textContent || '';
+        }
+        
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const element = node as Element;
+          const tagName = element.tagName.toLowerCase();
+          
+          let content = '';
+          for (const child of Array.from(node.childNodes)) {
+            content += processNode(child);
+          }
+          
+          switch (tagName) {
+            case 'h1':
+            case 'h2':
+            case 'h3':
+            case 'h4':
+            case 'h5':
+            case 'h6':
+              return `\n${content}\n`;
+            case 'p':
+              return `${content}\n\n`;
+            case 'br':
+              return '\n';
+            case 'hr':
+              return '\n---\n\n';
+            case 'li':
+              return `- ${content}\n`;
+            case 'ul':
+            case 'ol':
+              return `${content}\n`;
+            case 'div':
+              return `${content}\n`;
+            default:
+              return content;
+          }
+        }
+        
+        return '';
+      };
+      
+      let textContent = processNode(doc.body);
+      textContent = textContent
+        .replace(/\n{3,}/g, '\n\n')
+        .replace(/^\n+/, '')
+        .replace(/\n+$/, '');
       
       textArea.value = textContent;
       document.body.appendChild(textArea);
@@ -262,4 +367,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
